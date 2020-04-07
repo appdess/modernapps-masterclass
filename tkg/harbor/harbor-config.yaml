@@ -1,0 +1,4 @@
+expose.type: loadBalancer
+expose.loadBalancer.IP: "192.168.2.5"
+persistence.persistentVolumeClaim.registry.storageClass: standard
+externalURL: https://desscloud.harbor.local

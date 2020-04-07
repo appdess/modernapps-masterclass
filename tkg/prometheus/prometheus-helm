@@ -1,0 +1,33 @@
+
+** Please be patient while the chart is being deployed **
+
+Watch the Prometheus Operator Deployment status using the command:
+
+    kubectl get deploy -w --namespace ame -l app.kubernetes.io/name=prometheus-operator-operator,app.kubernetes.io/instance=prometheus
+
+Watch the Prometheus StatefulSet status using the command:
+
+    kubectl get sts -w --namespace ame -l app.kubernetes.io/name=prometheus-operator-prometheus,app.kubernetes.io/instance=prometheus
+
+Prometheus can be accessed via port "9090" on the following DNS name from within your cluster:
+
+    prometheus-prometheus-oper-prometheus.ame.svc.cluster.local
+
+To access Prometheus from outside the cluster execute the following commands:
+
+    echo "Prometheus URL: http://127.0.0.1:9090/"
+    kubectl port-forward --namespace ame svc/prometheus-prometheus-oper-prometheus 9090:9090
+
+Watch the Alertmanager StatefulSet status using the command:
+
+    kubectl get sts -w --namespace ame -l app.kubernetes.io/name=prometheus-operator-alertmanager,app.kubernetes.io/instance=prometheus
+
+Alertmanager can be accessed via port "9093" on the following DNS name from within your cluster:
+
+    prometheus-prometheus-oper-alertmanager.ame.svc.cluster.local
+
+To access Alertmanager from outside the cluster execute the following commands:
+
+    echo "Alertmanager URL: http://127.0.0.1:9093/"
+    kubectl port-forward --namespace ame svc/prometheus-prometheus-oper-alertmanager 9093:9093
+adess-m01:~ adess$ kubectl get deploy -w --namespace ame -l app.kubernetes.io/name=prometheus-operator-operator,app.kubernetes.io/instance=promethe

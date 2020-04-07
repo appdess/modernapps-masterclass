@@ -1,0 +1,10 @@
+persistence:
+    enabled: true
+  service:
+    type: LoadBalancer
+  mongodb:
+    mongodbPassword: password
+    mongodbRootPassword: password
+
+# Install via Helm
+# helm install rocketchat stable/rocketchat --set persistence.StorageClass=standard,mongodb.mongodbPassword=password,mongodb.mongodbRootPassword=password,service.type=LoadBalancer

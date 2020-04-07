@@ -1,0 +1,11 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: standard
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: csi.vsphere.vmware.com
+allowVolumeExpansion: true
+parameters:
+    storagePolicyName: "vSAN Default Storage Policy"
+    datastoreurl: "ds:///vmfs/volumes/vsan:b01e02424695410d-96775a9212a96fa1/"

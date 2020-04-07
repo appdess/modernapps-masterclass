@@ -1,0 +1,1 @@
+helm install harbor harbor/harbor -f harbor-config.yaml --namespace=harbor
