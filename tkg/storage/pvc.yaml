@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: adess2
+  name: myfirstpvc
 spec:
   storageClassName: standard
   accessModes:
