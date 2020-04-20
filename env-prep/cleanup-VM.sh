@@ -8,6 +8,6 @@ rm -rf ~/.config/google-chrome/Singleton*
 # remove TKG-Config
 rm -rf ~/.tkg
 rm -rf ~/.kube
-
+#
 # Remove History from bash
 history -c
