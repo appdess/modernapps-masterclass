@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: myfirstpvc
+  name: myfirstpvc           # the name of your created pvc
 spec:
-  storageClassName: standard
+  storageClassName: standard # the storage class we defined previously
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
+      storage: 3Gi # the size of our pvc
