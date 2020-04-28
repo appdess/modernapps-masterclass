@@ -1,0 +1,45 @@
+# Student 1
+Resources: 
+  Student1RDS:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupName: Student1-RDS-Inbound
+      GroupDescription: Student1-RDS-Inbound
+      SecurityGroupEgress:
+      - IpProtocol: '-1'
+        CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 3306
+        ToPort: 3306
+        CidrIp: 192.168.0.0/16
+      # - IpProtocol: tcp
+      #   FromPort: 3306
+      #   ToPort: 3306
+      #   CidrIp: 67.198.12.121/32
+      VpcId: <INSERT VPC ID>
+  Student1DBSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupDescription: Student1SubnetGroup
+      DBSubnetGroupName: Student1SubnetGroup
+      SubnetIds:
+        - <INSERT SUBNETID>
+        - <INSERT SUBNETID>
+  Student1RDSInstance:
+    Type: "AWS::RDS::DBInstance"
+    DeletionPolicy: Delete
+    Properties:
+      AllocatedStorage: '20'
+      DBInstanceClass: db.t2.micro
+      Engine: MySQL
+      DBSubnetGroupName: !Ref Student1DBSubnetGroup
+      VPCSecurityGroups: 
+       - !Ref Student1RDS
+      MasterUsername: <INSERT USERNAME>
+      MasterUserPassword: <INSERT PASSWORD>
+      MonitoringInterval: 0 #Not using enhanced monitoring. Regular RDS monitoring is still enabled.
+      PubliclyAccessible: false 
+      StorageType: gp2
+      DBInstanceIdentifier: <INSERT DB IDENTIFIER>
+      BackupRetentionPeriod : 0   
