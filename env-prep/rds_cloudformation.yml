@@ -17,15 +17,15 @@ Resources:
       #   FromPort: 3306
       #   ToPort: 3306
       #   CidrIp: 67.198.12.121/32
-      VpcId: <INSERT VPC ID>
+      VpcId: vpc-7ac5f511
   Student1DBSubnetGroup:
     Type: "AWS::RDS::DBSubnetGroup"
     Properties: 
       DBSubnetGroupDescription: Student1SubnetGroup
       DBSubnetGroupName: Student1SubnetGroup
       SubnetIds:
-        - <INSERT SUBNETID>
-        - <INSERT SUBNETID>
+        - subnet-fb2207b6
+        - subnet-7b6c7710
   Student1RDSInstance:
     Type: "AWS::RDS::DBInstance"
     DeletionPolicy: Delete
@@ -36,10 +36,10 @@ Resources:
       DBSubnetGroupName: !Ref Student1DBSubnetGroup
       VPCSecurityGroups: 
        - !Ref Student1RDS
-      MasterUsername: <INSERT USERNAME>
-      MasterUserPassword: <INSERT PASSWORD>
+      MasterUsername: VMware1!
+      MasterUserPassword: VMware1!
       MonitoringInterval: 0 #Not using enhanced monitoring. Regular RDS monitoring is still enabled.
       PubliclyAccessible: false 
       StorageType: gp2
-      DBInstanceIdentifier: <INSERT DB IDENTIFIER>
+      DBInstanceIdentifier: titodb
       BackupRetentionPeriod : 0   

@@ -46,8 +46,8 @@ spec:
           env:
           - name: TITO_VERSION
             value: V2
-          - name: TITO-SQL # The IP of the Database VM which was setup - look in app code form-result.php for getenv funciton
-            value: 172.31.42.147
+          - name: TITO_SQL_SERVICE_SERVICE_HOST # The IP of the Database VM which was setup
+            value: 10.72.30.68
           - name: POD_NAME
             valueFrom:
               fieldRef:
