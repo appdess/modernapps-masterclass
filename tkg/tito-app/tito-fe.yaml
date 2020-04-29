@@ -40,7 +40,7 @@ spec:
       containers:
         - name: tito
           image: adess/vmc-demo-k8s:latest
-          imagePullPolicy: always
+          imagePullPolicy: Always
           ports:
           - containerPort: 80
           env:
