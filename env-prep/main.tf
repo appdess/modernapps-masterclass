@@ -15,6 +15,6 @@ resource "aws_db_instance" "masterclass-db" {
     instance_class = "db.t2.micro"
     identifier = "masterclass-db"
     name = "TitoDB"
-    username = "root"
-    password = "Tito2016"
+    username = "admin"
+    password = "VMware1!"
 }
