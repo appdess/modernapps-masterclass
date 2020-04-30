@@ -70,9 +70,9 @@ metadata:
 spec:
   type: NodePort
   ports:
+    NodePort: 30007
   - name: http
-    port: 80   
-    NodePort: 30007            
+    port: 80        
   selector:                
     type: tito-fe
     tier: frontend
