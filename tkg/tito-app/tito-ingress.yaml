@@ -39,15 +39,15 @@ spec:
     spec:
       containers:
         - name: tito
-          image: adess/vmc-demo-k8s:v5
-          imagePullPolicy: IfNotPresent
+          image: adess/vmc-demo-k8s
+          imagePullPolicy: Always
           ports:
           - containerPort: 80
           env:
           - name: TITO_VERSION
             value: V2
-          - name: TITO_SQL_SERVICE_SERVICE_HOST # The IP of the Database VM which was setup
-            value: 10.72.30.68
+          - name: TITO_SQL_SERVICE_SERVICE_HOST # The IP of the Database VM which was setup - look in app code form-result.php for getenv funciton
+            value: 172.30.118.21 # 172.31.42.147 for RDS
           - name: POD_NAME
             valueFrom:
               fieldRef:
@@ -68,14 +68,16 @@ metadata:
     stage: prod
     namespace: tito-app
 spec:
+  type: NodePort
   ports:
   - name: http
-    port: 80               
+    port: 80   
+    NodePort: 30007            
   selector:                
     type: tito-fe
     tier: frontend
-  type: LoadBalancer
-status:
-  loadBalancer:
-    ingress:
-    - ip: 10.72.30.31
+ 
+# status:
+# loadBalancer:
+#    ingress:
+#    - ip: 10.72.30.31
