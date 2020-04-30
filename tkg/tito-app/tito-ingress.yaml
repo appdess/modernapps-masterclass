@@ -70,14 +70,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    NodePort: 30007
   - name: http
     port: 80        
   selector:                
     type: tito-fe
     tier: frontend
- 
-# status:
-# loadBalancer:
-#    ingress:
-#    - ip: 10.72.30.31
