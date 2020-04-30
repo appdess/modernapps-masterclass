@@ -70,9 +70,12 @@ metadata:
 spec:
   type: NodePort
   ports:
-    nodePort: 30007
-  - name: http
-    port: 80        
+    # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+  - port: 80
+    targetPort: 80
+    # Optional field
+    # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+    nodePort: 30007  
   selector:                
     type: tito-fe
     tier: frontend
