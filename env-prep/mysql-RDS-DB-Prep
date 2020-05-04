@@ -1,4 +1,4 @@
-# connect to db
+# connect to RDS-DB:
 mysql -u root -p -h tkg-ws.c9mpcxbeqhcq.eu-central-1.rds.amazonaws.com
 
 # create tables:
@@ -6,3 +6,8 @@ create database if not exists TitoDB;
 use TitoDB;
 CREATE TABLE TitoTable (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, home VARCHAR(50) NOT NULL, work VARCHAR(50) NOT NULL, hour_home_departure VARCHAR(50) NOT NULL, hour_work_departure VARCHAR(50) NOT NULL);
 
+# Insert some dummy stuff (duplicate the rows)
+CREATE TEMPORARY TABLE tmp SELECT * from TitoTable;
+ALTER TABLE tmp DROP id;
+INSERT INTO TitoTable SELECT 0, tmp.* FROM tmp;
+DROP TABLE tmp;
