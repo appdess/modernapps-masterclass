@@ -74,7 +74,8 @@ spec:
   selector:                
     type: tito-fe
     tier: frontend
-  type: LoadBalancer
+    type: Nodeport
+ # type: LoadBalancer
 # status:
 # loadBalancer:
 #    ingress:
