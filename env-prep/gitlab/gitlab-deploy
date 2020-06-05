@@ -8,7 +8,7 @@ helm --namespace gitlab upgrade --install gitlab gitlab/gitlab \
   --timeout 600s \
   --set global.hosts.domain=set.local \
   --set certmanager-issuer.email=adess@vmware.com \
-  --set global.hosts.externalIP=172.30.124.6 \
+  --set global.hosts.externalIP=172.30.124.13 \
   --set global.edition=ce
 
   kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo

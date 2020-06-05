@@ -7,4 +7,8 @@ persistence:
     mongodbRootPassword: password
 
 # Install via Helm
-# helm install rocketchat stable/rocketchat --set persistence.StorageClass=standard,mongodb.mongodbPassword=password,mongodb.mongodbRootPassword=password,service.type=LoadBalancer
+# add repo 
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+
+# helm install
+helm install rocketchat stable/rocketchat --set persistence.StorageClass=standard,mongodb.mongodbPassword=password,mongodb.mongodbRootPassword=password,service.type=LoadBalancer
