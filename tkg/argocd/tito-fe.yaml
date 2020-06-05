@@ -22,7 +22,7 @@ metadata:
     stage: prod
     namespace: tito-app
 spec:
-  replicas: 2
+  replicas: 10
   selector:
     matchLabels:
       type: tito-fe
@@ -58,7 +58,7 @@ spec:
                 fieldPath: metadata.namespace
 
 ---
-  
+
     apiVersion: v1
     kind: Service
     metadata:
