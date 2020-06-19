@@ -8,4 +8,4 @@ provisioner: csi.vsphere.vmware.com
 allowVolumeExpansion: true
 parameters:
     storagePolicyName: "vSAN Default Storage Policy"
-    datastoreurl: "ds:///vmfs/volumes/vsan:b01e02424695410d-96775a9212a96fa1/"
+    datastoreurl: "ds:///vmfs/volumes/vsan:eb07701f2906468f-adf8503de341e053/"
