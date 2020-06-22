@@ -8,6 +8,7 @@ metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.vsphere.vmware.com
+allowVolumeExpansion: true
 parameters:
     storagePolicyName: "vSAN Default Storage Policy" # our vSAN Storage policy from vCenter
     datastoreurl: "ds:///vmfs/volumes/vsan:eb07701f2906468f-adf8503de341e053/" # the Datasture-URL of our WorkloadDatastore
