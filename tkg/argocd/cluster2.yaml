@@ -1,7 +1,7 @@
 apiVersion: cluster.x-k8s.io/v1alpha3
 kind: Cluster
 metadata:
-  name: tkg-workload-01
+  name: adess-tkg-workload-02
   namespace: default
 spec:
   clusterNetwork:
@@ -14,44 +14,44 @@ spec:
   controlPlaneRef:
     apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
     kind: KubeadmControlPlane
-    name: tkg-workload-01-control-plane
+    name: adess-tkg-workload-02-control-plane
   infrastructureRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
     kind: VSphereCluster
-    name: tkg-workload-01
+    name: adess-tkg-workload-02
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
 kind: HAProxyLoadBalancer
 metadata:
   labels:
-    cluster.x-k8s.io/cluster-name: tkg-workload-01
-  name: tkg-workload-01-default
+    cluster.x-k8s.io/cluster-name: adess-tkg-workload-02
+  name: adess-tkg-workload-02-default
   namespace: default
 spec:
   user:
     authorizedKeys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH8XeA84en8phjBOuUiZa8t0uxwJWo+XSOrNzhFN0xrMFRCa3/JGDYElDuPHhELCXq1FNPr8kjalrkWX0BGyb7H/ARRnkEZN/qQbl9uEbggL96PiB70IGzkuHQP9qUd1OhHARMVZGUV5gYTHvd/ZrH5TunX8bUsaT27GkJmCE08HltCMjJTjqmQHnSbrNG5WcjueHdNKFVWR2giFrTMcst6LUZ2mMZIjF4m+LuEjquoFWEil8RWS29yS2OYw7lJ3LgLRSD/7AMQdx9UyIKwYxYPuKYarpBPK9RK4e7Tk2gSNSWHmMYh24i+Ob5VJKuOhbKSmOm1kJDCPqO+0RgFIvx
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfIzZmdwhaYj7PGzplFyG47Vhbt50qNOutzZkx+19rpO66QNUEfC39quDV7KSYxz0thUrkY2LZiNJid6sG8aby+dCyEu6TpIx2tQQqfIHkgMoDtb7ZgAtZXp7+RzKmDblbeTKXwDJokkvJAUw5aIZIB6DTvxW10TiEhDk/O++NWAqFWRUt2vHyl/jKE0tnmXNUDaE0LF6ufQGwfOt23cIR6Ej/k0fH+15WTpXi4A1xYdssEvm7XBqajZn3olMB11SCXHNWSKGZZC4N1/eUySPVQUV6+p7JHrg8ydqQu6U53vZyCKrvcHwUtf1RZSVWZTi0A8ojq0wyhV/x5tAADnQdGCYsbi0qxRuzm9toqok3hc+ETU1fLVtBTmlbWtuNf6r+VjSQqzVTuDUurtaRCaNZmH/SqdBcNKTo6dZ4kKnx+o923ulIMf+AOlqA09c5UKXftxrYniIWDc5DilwQYLk3AoDGL/evXdyF4X+TPCbDFF9ilOjC0d++hw0aVmCQZ40=
     name: capv
   virtualMachineConfiguration:
     cloneMode: fullClone
     datacenter: /SDDC-Datacenter
     datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
     diskGiB: 20
-    folder: /SDDC-Datacenter/vm/Workloads/vmichael
+    folder: /SDDC-Datacenter/vm/TKG/adess
     memoryMiB: 2028
     network:
       devices:
       - dhcp4: true
-        networkName: emea-tkg-01
+        networkName: tkg-net
     numCPUs: 1
-    resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/tkg
-    server: vcenter.sddc-18-195-38-9.vmwarevmc.com
-    template: /SDDC-Datacenter/vm/Templates/Linux-TKG/photon-3-capv-haproxy-v0.6.3_vmware.1
+    resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/TKG
+    server: vcenter.sddc-52-29-197-20.vmwarevmc.com
+    template: /SDDC-Datacenter/vm/Templates/photon-3-haproxy-v1.2.4-vmware.1
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
 kind: VSphereCluster
 metadata:
-  name: tkg-workload-01
+  name: adess-tkg-workload-02
   namespace: default
 spec:
   cloudProviderConfiguration:
@@ -60,7 +60,7 @@ spec:
       secretName: cloud-provider-vsphere-credentials
       secretNamespace: kube-system
     network:
-      name: emea-tkg-01
+      name: tkg-net
     providerConfig:
       cloud:
         controllerImage: registry.tkg.vmware.run/ccm/manager:v1.1.0_vmware.2
@@ -75,24 +75,24 @@ spec:
         provisionerImage: registry.tkg.vmware.run/csi/csi-provisioner:v1.4.0_vmware.2
         registrarImage: registry.tkg.vmware.run/csi/csi-node-driver-registrar:v1.1.0_vmware.7
     virtualCenter:
-      vcenter.sddc-18-195-38-9.vmwarevmc.com:
+      vcenter.sddc-52-29-197-20.vmwarevmc.com:
         datacenters: /SDDC-Datacenter
     workspace:
       datacenter: /SDDC-Datacenter
       datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
-      folder: /SDDC-Datacenter/vm/Workloads/vmichael
-      resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/tkg
-      server: vcenter.sddc-18-195-38-9.vmwarevmc.com
+      folder: /SDDC-Datacenter/vm/TKG/adess
+      resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/TKG
+      server: vcenter.sddc-52-29-197-20.vmwarevmc.com
   loadBalancerRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
     kind: HAProxyLoadBalancer
-    name: tkg-workload-01-default
-  server: vcenter.sddc-18-195-38-9.vmwarevmc.com
+    name: adess-tkg-workload-02-default
+  server: vcenter.sddc-52-29-197-20.vmwarevmc.com
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
 kind: VSphereMachineTemplate
 metadata:
-  name: tkg-workload-01
+  name: adess-tkg-workload-02-control-plane
   namespace: default
 spec:
   template:
@@ -101,27 +101,50 @@ spec:
       datacenter: /SDDC-Datacenter
       datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
       diskGiB: 20
-      folder: /SDDC-Datacenter/vm/Workloads/vmichael
+      folder: /SDDC-Datacenter/vm/TKG/adess
       memoryMiB: 2028
       network:
         devices:
         - dhcp4: true
-          networkName: emea-tkg-01
+          networkName: tkg-net
       numCPUs: 1
-      resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/tkg
-      server: vcenter.sddc-18-195-38-9.vmwarevmc.com
-      template: /SDDC-Datacenter/vm/Templates/Linux-TKG/photon-3-v1.17.3_vmware.2
+      resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/TKG
+      server: vcenter.sddc-52-29-197-20.vmwarevmc.com
+      template: /SDDC-Datacenter/vm/Templates/photon-3-kube-v1.18.2-vmware.1
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+kind: VSphereMachineTemplate
+metadata:
+  name: adess-tkg-workload-02-worker
+  namespace: default
+spec:
+  template:
+    spec:
+      cloneMode: fullClone
+      datacenter: /SDDC-Datacenter
+      datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+      diskGiB: 20
+      folder: /SDDC-Datacenter/vm/TKG/adess
+      memoryMiB: 2028
+      network:
+        devices:
+        - dhcp4: true
+          networkName: tkg-net
+      numCPUs: 1
+      resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool/TKG
+      server: vcenter.sddc-52-29-197-20.vmwarevmc.com
+      template: /SDDC-Datacenter/vm/Templates/photon-3-kube-v1.18.2-vmware.1
 ---
 apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
 kind: KubeadmControlPlane
 metadata:
-  name: tkg-workload-01-control-plane
+  name: adess-tkg-workload-02-control-plane
   namespace: default
 spec:
   infrastructureTemplate:
     apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
     kind: VSphereMachineTemplate
-    name: tkg-workload-01
+    name: adess-tkg-workload-02-control-plane
   kubeadmConfigSpec:
     clusterConfiguration:
       apiServer:
@@ -135,7 +158,7 @@ spec:
           tls-cipher-suites: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
       dns:
         imageRepository: registry.tkg.vmware.run
-        imageTag: v1.6.5_vmware.4
+        imageTag: v1.6.7_vmware.1
         type: CoreDNS
       etcd:
         local:
@@ -143,9 +166,9 @@ spec:
           extraArgs:
             cipher-suites: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
           imageRepository: registry.tkg.vmware.run
-          imageTag: v3.4.3_vmware.4
+          imageTag: v3.4.3_vmware.5
       imageRepository: registry.tkg.vmware.run
-      kubernetesVersion: v1.17.3+vmware.2
+      kubernetesVersion: v1.18.2+vmware.1
       scheduler:
         extraArgs:
           tls-cipher-suites: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
@@ -173,15 +196,15 @@ spec:
     users:
     - name: capv
       sshAuthorizedKeys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH8XeA84en8phjBOuUiZa8t0uxwJWo+XSOrNzhFN0xrMFRCa3/JGDYElDuPHhELCXq1FNPr8kjalrkWX0BGyb7H/ARRnkEZN/qQbl9uEbggL96PiB70IGzkuHQP9qUd1OhHARMVZGUV5gYTHvd/ZrH5TunX8bUsaT27GkJmCE08HltCMjJTjqmQHnSbrNG5WcjueHdNKFVWR2giFrTMcst6LUZ2mMZIjF4m+LuEjquoFWEil8RWS29yS2OYw7lJ3LgLRSD/7AMQdx9UyIKwYxYPuKYarpBPK9RK4e7Tk2gSNSWHmMYh24i+Ob5VJKuOhbKSmOm1kJDCPqO+0RgFIvx
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfIzZmdwhaYj7PGzplFyG47Vhbt50qNOutzZkx+19rpO66QNUEfC39quDV7KSYxz0thUrkY2LZiNJid6sG8aby+dCyEu6TpIx2tQQqfIHkgMoDtb7ZgAtZXp7+RzKmDblbeTKXwDJokkvJAUw5aIZIB6DTvxW10TiEhDk/O++NWAqFWRUt2vHyl/jKE0tnmXNUDaE0LF6ufQGwfOt23cIR6Ej/k0fH+15WTpXi4A1xYdssEvm7XBqajZn3olMB11SCXHNWSKGZZC4N1/eUySPVQUV6+p7JHrg8ydqQu6U53vZyCKrvcHwUtf1RZSVWZTi0A8ojq0wyhV/x5tAADnQdGCYsbi0qxRuzm9toqok3hc+ETU1fLVtBTmlbWtuNf6r+VjSQqzVTuDUurtaRCaNZmH/SqdBcNKTo6dZ4kKnx+o923ulIMf+AOlqA09c5UKXftxrYniIWDc5DilwQYLk3AoDGL/evXdyF4X+TPCbDFF9ilOjC0d++hw0aVmCQZ40=
       sudo: ALL=(ALL) NOPASSWD:ALL
   replicas: 1
-  version: v1.17.3+vmware.2
+  version: v1.18.2+vmware.1
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
 kind: KubeadmConfigTemplate
 metadata:
-  name: tkg-workload-01-md-0
+  name: adess-tkg-workload-02-md-0
   namespace: default
 spec:
   template:
@@ -203,43 +226,63 @@ spec:
       users:
       - name: capv
         sshAuthorizedKeys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH8XeA84en8phjBOuUiZa8t0uxwJWo+XSOrNzhFN0xrMFRCa3/JGDYElDuPHhELCXq1FNPr8kjalrkWX0BGyb7H/ARRnkEZN/qQbl9uEbggL96PiB70IGzkuHQP9qUd1OhHARMVZGUV5gYTHvd/ZrH5TunX8bUsaT27GkJmCE08HltCMjJTjqmQHnSbrNG5WcjueHdNKFVWR2giFrTMcst6LUZ2mMZIjF4m+LuEjquoFWEil8RWS29yS2OYw7lJ3LgLRSD/7AMQdx9UyIKwYxYPuKYarpBPK9RK4e7Tk2gSNSWHmMYh24i+Ob5VJKuOhbKSmOm1kJDCPqO+0RgFIvx
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfIzZmdwhaYj7PGzplFyG47Vhbt50qNOutzZkx+19rpO66QNUEfC39quDV7KSYxz0thUrkY2LZiNJid6sG8aby+dCyEu6TpIx2tQQqfIHkgMoDtb7ZgAtZXp7+RzKmDblbeTKXwDJokkvJAUw5aIZIB6DTvxW10TiEhDk/O++NWAqFWRUt2vHyl/jKE0tnmXNUDaE0LF6ufQGwfOt23cIR6Ej/k0fH+15WTpXi4A1xYdssEvm7XBqajZn3olMB11SCXHNWSKGZZC4N1/eUySPVQUV6+p7JHrg8ydqQu6U53vZyCKrvcHwUtf1RZSVWZTi0A8ojq0wyhV/x5tAADnQdGCYsbi0qxRuzm9toqok3hc+ETU1fLVtBTmlbWtuNf6r+VjSQqzVTuDUurtaRCaNZmH/SqdBcNKTo6dZ4kKnx+o923ulIMf+AOlqA09c5UKXftxrYniIWDc5DilwQYLk3AoDGL/evXdyF4X+TPCbDFF9ilOjC0d++hw0aVmCQZ40=
         sudo: ALL=(ALL) NOPASSWD:ALL
 ---
 apiVersion: cluster.x-k8s.io/v1alpha3
 kind: MachineDeployment
 metadata:
   labels:
-    cluster.x-k8s.io/cluster-name: tkg-workload-01
-  name: tkg-workload-01-md-0
+    cluster.x-k8s.io/cluster-name: adess-tkg-workload-02
+  name: adess-tkg-workload-02-md-0
   namespace: default
 spec:
-  clusterName: tkg-workload-01
-  replicas: 1
+  clusterName: adess-tkg-workload-02
+  replicas: 2
   selector:
     matchLabels:
-      cluster.x-k8s.io/cluster-name: tkg-workload-01
+      cluster.x-k8s.io/cluster-name: adess-tkg-workload-02
   template:
     metadata:
       labels:
-        cluster.x-k8s.io/cluster-name: tkg-workload-01
+        cluster.x-k8s.io/cluster-name: adess-tkg-workload-02
+        node-pool: adess-tkg-workload-02-worker-pool
     spec:
       bootstrap:
         configRef:
           apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
           kind: KubeadmConfigTemplate
-          name: tkg-workload-01-md-0
-      clusterName: tkg-workload-01
+          name: adess-tkg-workload-02-md-0
+      clusterName: adess-tkg-workload-02
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
         kind: VSphereMachineTemplate
-        name: tkg-workload-01
-      version: v1.17.3+vmware.2
+        name: adess-tkg-workload-02-worker
+      version: v1.18.2+vmware.1
+---
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: MachineHealthCheck
+metadata:
+  name: adess-tkg-workload-02
+  namespace: default
+spec:
+  clusterName: adess-tkg-workload-02
+  nodeStartupTimeout: 20m
+  selector:
+    matchLabels:
+      node-pool: adess-tkg-workload-02-worker-pool
+  unhealthyConditions:
+  - status: Unknown
+    timeout: 5m
+    type: Ready
+  - status: "False"
+    timeout: 5m
+    type: Ready
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: tkg-workload-01-postcreate
+  name: adess-tkg-workload-02-postcreate
   namespace: default
 stringData:
   calicoYaml: |
@@ -761,7 +804,7 @@ stringData:
             # It can be deleted if this is a fresh installation, or if you have already
             # upgraded to use calico-ipam.
             - name: upgrade-ipam
-              image: registry.tkg.vmware.run/calico-all/cni-plugin:v3.11.2_vmware.1
+              image: 'registry.tkg.vmware.run/calico-all/cni-plugin:v3.11.2_vmware.1'
               command: ["/opt/cni/bin/calico-ipam", "-upgrade"]
               env:
                 - name: KUBERNETES_NODE_NAME
@@ -783,7 +826,7 @@ stringData:
             # This container installs the CNI binaries
             # and CNI network config file on each node.
             - name: install-cni
-              image: registry.tkg.vmware.run/calico-all/cni-plugin:v3.11.2_vmware.1
+              image: 'registry.tkg.vmware.run/calico-all/cni-plugin:v3.11.2_vmware.1'
               command: ["/install-cni.sh"]
               env:
                 # Name of the CNI config file to create.
@@ -819,7 +862,7 @@ stringData:
             # Adds a Flex Volume Driver that creates a per-pod Unix Domain Socket to allow Dikastes
             # to communicate with Felix over the Policy Sync API.
             - name: flexvol-driver
-              image: registry.tkg.vmware.run/calico-all/pod2daemon:v3.11.2_vmware.1
+              image: 'registry.tkg.vmware.run/calico-all/pod2daemon:v3.11.2_vmware.1'
               volumeMounts:
               - name: flexvol-driver-host
                 mountPath: /host/driver
@@ -830,7 +873,7 @@ stringData:
             # container programs network policy and routes on each
             # host.
             - name: calico-node
-              image: registry.tkg.vmware.run/calico-all/node:v3.11.2_vmware.1
+              image: 'registry.tkg.vmware.run/calico-all/node:v3.11.2_vmware.1'
               env:
                 # Use Kubernetes API as the backing datastore.
                 - name: DATASTORE_TYPE
@@ -1005,7 +1048,7 @@ stringData:
           priorityClassName: system-cluster-critical
           containers:
             - name: calico-kube-controllers
-              image: registry.tkg.vmware.run/calico-all/kube-controllers:v3.11.2_vmware.1
+              image: 'registry.tkg.vmware.run/calico-all/kube-controllers:v3.11.2_vmware.1'
               env:
                 # Choose which controllers to run.
                 - name: ENABLED_CONTROLLERS
