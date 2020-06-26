@@ -1,7 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: myfirstpvc           # the name of your created pvc
+  name: static-pv-name
+  annotations:
+    pv.kubernetes.io/provisioned-by: csi.vsphere.vmware.com
+  labels:
+    "app": "tito-app" # a label set
 spec:
   storageClassName: standard # the storage class we defined previously
   accessModes:
